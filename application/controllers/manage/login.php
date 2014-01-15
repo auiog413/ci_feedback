@@ -37,6 +37,8 @@ class Login extends CI_Controller {
 			}else{
 				$login_error = 1;
 			}
+		}else{
+			$login_error = 1;
 		}
 
 		$this->load->view('manage/login', array('login_error' => $login_error));
