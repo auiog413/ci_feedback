@@ -23,7 +23,7 @@ class Logout extends CI_Controller {
 
 		$this->session->set_userdata(array('isloggedin' => ''));
 		$this->load->helper('url');
-		redirect('manage/feedback/view', 'location', 301);
+		redirect('manage/login', 'location', 301);
 	}
 }
 

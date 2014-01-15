@@ -43,7 +43,7 @@
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 				<img alt="" src="/statics/avatar1_small.jpg">
 				<span class="username">
-					admin
+					root
 				</span>
 				<i class="fa fa-angle-down"></i>
 				</a>
@@ -168,7 +168,7 @@
 												<tbody>
 													<tr>
 														<td>附件</td>
-														<td><img src="/<?php echo $item->attachments;?>" /></td>
+														<td><img src="<?php echo $item->attachments;?>" /></td>
 													</tr>
 												</tbody>
 											</table>

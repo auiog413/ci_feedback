@@ -37,6 +37,7 @@ class Feedback extends CI_Controller {
 	 *     http://example.com/index.php/feedback/add
 	 */
 	public function add(){
+		
 		// 附件上传
 		$u_config['upload_path'] = 'statics/fb_uploads/' . date('Y/m');
 		$u_config['allowed_types'] = 'gif|jpg|png';
@@ -56,13 +57,20 @@ class Feedback extends CI_Controller {
 		// 上传成功了
 		}else{
 			$u_data = $this->upload->data();
-			$attachments = $u_config['upload_path'] . '/' . $u_data['file_name'];
+			$attachments = '/' . $u_config['upload_path'] . '/' . $u_data['file_name'];
+		}
+
+		// 判定是否为空
+		$content = $this->input->post('content');
+		if(empty($content)){
+			$error = array('errno' => 2, 'errmsg' => 'content is empty.');
+			die(json_encode($error));
 		}
 
 		// 插入数据库
 		$this->load->helper('date', 'url');
 		$sertarr = array(
-			'feed_content' => $this->input->post('content'),
+			'feed_content' => $content,
 			'attachments'  => $attachments,
 			'ip' 		   => $this->input->ip_address(),
 			'datetime'     => now()

@@ -36,10 +36,10 @@
   <!-- BEGIN LOGIN FORM -->
   <form class="login-form" action="/manage/login" method="post">
     <h3 class="form-title">登陆</h3>
-    <div class="alert alert-danger display-hide">
+    <div class="alert alert-danger<?php if(!$login_error){echo ' display-hide';}?>">
       <button class="close" data-close="alert"></button>
       <span>
-         登陆
+         登陆失败，请重试！
       </span>
     </div>
     <div class="form-group">
