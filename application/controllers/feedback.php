@@ -38,19 +38,39 @@ class Feedback extends CI_Controller {
 	 */
 	public function add(){
 		// 附件上传
-		$config['upload_path'] = './statics/fb_uploads/' . date('Y/m');
-		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size'] = '2048';
-		$this->load->library('upload', $config);
+		$u_config['upload_path'] = 'statics/fb_uploads/' . date('Y/m');
+		$u_config['allowed_types'] = 'gif|jpg|png';
+		$u_config['max_size'] = '2048';
+		$u_config['encrypt_name'] = TRUE;
+		$this->load->library('upload', $u_config);
 
+		// 附件上传不成功
 		if(! $this->upload->do_upload('attachment')){
-			$error = array('error' => $this->upload->display_errors());
-   			$this->load->view('upload_form', $error);
+			$error = array('errno' => 1, 'errmsg' => $this->upload->display_errors('', ''));
+			if(md5($error['errmsg']) == '0890c0740e3e1c1869bbcc82c156de5e'){
+				$attachments = '';
+			}else{
+				die(json_encode($error));
+			}
+
+		// 上传成功了
 		}else{
-			$data = array('upload_data' => $this->upload->data());
-   	 		$this->load->view('upload_success', $data);
+			$u_data = $this->upload->data();
+			$attachments = $u_config['upload_path'] . '/' . $u_data['file_name'];
 		}
-		//$this->input->post('content');
+
+		// 插入数据库
+		$this->load->helper('date', 'url');
+		$sertarr = array(
+			'feed_content' => $this->input->post('content'),
+			'attachments'  => $attachments,
+			'ip' 		   => $this->input->ip_address(),
+			'datetime'     => now()
+			);
+		$this->db->insert('feedback_items', $sertarr);
+
+		// 接口应答信息 json 格式
+		die(json_encode(array('errno' => 0, 'msg' => 'success added.')));
 	}
 
 	/**
