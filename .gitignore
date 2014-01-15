@@ -5,4 +5,4 @@
 /application/logs/*
 !/application/logs/index.html
 !/application/logs/.htaccess
-/.codeIgniter_2.1.4.zip
+.codeIgniter_2.1.4.zip
