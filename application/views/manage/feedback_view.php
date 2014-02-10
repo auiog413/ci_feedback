@@ -139,13 +139,13 @@
 								: activate to sort column descending" style="width: 700px;">
 									反馈内容
 								</th><th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" aria-label="
-									Platform(s)
-								: activate to sort column ascending" style="width: 100px;">
-									反馈时间
-								</th><th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" aria-label="
 									Engine version
-								: activate to sort column ascending" style="width: 160px;">
+								: activate to sort column ascending" style="width: 150px;">
 									ip地址
+								</th><th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" aria-label="
+									Platform(s)
+								: activate to sort column ascending" style="width: 150px;">
+									反馈时间
 								</th><th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" aria-label="
 									CSS grade
 								: activate to sort column ascending" style="width: 80px;">
@@ -155,25 +155,29 @@
 							
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<?php $seqs = 1; foreach ($fb_list->result() as $item):?>
-									<tr class="odd">
-										<td class=" "><?php echo $seqs++;?></td>
-										<td class=" sorting_1"><?php echo $item->feed_content;?></td>
-										<td class=" "><?php echo $item->ip;?></td>
-										<td class=" "><?php echo date('Y-m-d H:i', $item->datetime);?></td>
-										<td class=" "></td>
+									<?php $has_attachment = empty($item->attachments)?0:1;?>
+									<tr class="odd"><?php $colspan=0;?>
+										<?php $colspan++;?><td class=" "><?php echo $seqs;?></td>
+										<?php $colspan++;?><td class=" sorting_1"><?php echo $item->feed_content;?><?php if($has_attachment){ ?><img src="/statics/image_s.gif" alt="图片附件" style="cursor:pointer;margin-left:5px;" rel="<?php echo $seqs;?>" onclick="var rel_id=jQuery(this).attr('rel');var attachment_obj=jQuery('tr#attachment_'+rel_id);if(attachment_obj.css('display')=='none'){attachment_obj.show();}else{attachment_obj.hide();}"><?php } ?></td>
+										<?php $colspan++;?><td class=" "><?php echo $item->ip;?></td>
+										<?php $colspan++;?><td class=" "><?php echo date('Y-m-d H:i', $item->datetime);?></td>
+										<?php $colspan++;?><td class=" "></td>
 									</tr>
-									<tr style="display:none;">
-										<td class="details" colspan="6">
-											<table>
-												<tbody>
-													<tr>
-														<td>附件</td>
-														<td><img src="<?php echo $item->attachments;?>" /></td>
-													</tr>
-												</tbody>
-											</table>
-										</td>
-									</tr>
+									<?php if($has_attachment){ ?>
+										<tr id="attachment_<?php echo $seqs;?>" style="display:none;">
+											<td class="details" colspan="<?php echo $colspan;?>">
+												<table>
+													<tbody>
+														<tr>
+															<td>附件</td>
+															<td><img style="max-width:1280px;" src="<?php echo $item->attachments;?>" /></td>
+														</tr>
+													</tbody>
+												</table>
+											</td>
+										</tr>
+									<?php } ?>
+									<?php $seqs++;?>
 								<?php endforeach;?>
 							</tbody>
 						</table></div>
