@@ -7,7 +7,57 @@ class Feedback extends CI_Controller {
 	 */
 	public function __construct(){
 		parent::__construct();
+		
+		$this->load->helper(array('form','captcha','string'));
+		$this->load->library('session');
 	}
+	
+	/**
+	 * 生成验证码
+	 */
+	private function generate_captcha(){
+		$val_arr = array(
+			'word' 			=> random_string('alnum', 4),
+			'img_path' 		=> './statics/captcha/',
+			'img_url' 		=> $this->config->item('base_url') . 'statics/captcha/',
+		);
+		
+		$captcha = create_captcha($val_arr);
+		$flash_session['word'] = $captcha['word'];
+		$flash_session['file'] = $val_arr['img_path'] . $captcha['time'] . '.jpg';
+		$this->session->set_flashdata('captcha', json_encode($flash_session));
+		
+		return $captcha['image'];
+	}
+	
+	/**
+	 * 验证用户填写的验证码
+	 */
+	private function validate_captcha($submited_captcha = ''){
+		$captcha = json_decode($this->session->flashdata('captcha'), true);
+		
+		if(empty($captcha) || empty($submited_captcha)){
+			return false;
+		}
+		
+		if(file_exists($captcha['file']) && !is_dir($captcha['file'])){
+			unlink($captcha['file']);
+		}
+		
+		if(strtolower($submited_captcha) == strtolower($captcha['word'])){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	/**
+	 * 用户主动刷新验证码
+	 */
+	//public function refresh_capthcha()
+	//{
+	//	die($this->generate_captcha());
+	//}
 
 	/**
 	 * Index Page for this controller.
@@ -26,10 +76,11 @@ class Feedback extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->helper('form');
-		$this->load->view('upload_form');
+		$v_data['captcha_image'] = $this->generate_captcha();
+		$v_data['base_url'] = $this->config->item('base_url');
+		$this->load->view('upload_form', $v_data);
 	}
-
+	
 	/**
 	 * 添加反馈
 	 *
@@ -37,6 +88,11 @@ class Feedback extends CI_Controller {
 	 *     http://example.com/index.php/feedback/add
 	 */
 	public function add(){
+		
+		// 验证码
+		if(!$this->validate_captcha($this->input->post('captcha'))){
+			die(json_encode(array('errno' => 3, 'errmsg' => 'captcha_code_error.')));
+		}
 		
 		// 附件上传
 		$u_config['upload_path'] = 'statics/fb_uploads/' . date('Y/m');
@@ -63,8 +119,7 @@ class Feedback extends CI_Controller {
 		// 判定是否为空
 		$content = $this->input->post('content');
 		if(empty($content)){
-			$error = array('errno' => 2, 'errmsg' => 'content is empty.');
-			die(json_encode($error));
+			die(json_encode(array('errno' => 2, 'errmsg' => 'content_is_empty.')));
 		}
 
 		// 插入数据库
@@ -78,7 +133,7 @@ class Feedback extends CI_Controller {
 		$this->db->insert('feedback_items', $sertarr);
 
 		// 接口应答信息 json 格式
-		die(json_encode(array('errno' => 0, 'msg' => 'success added.')));
+		die(json_encode(array('errno' => 0, 'msg' => 'success_added.')));
 	}
 
 	/**
