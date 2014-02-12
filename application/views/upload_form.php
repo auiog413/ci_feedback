@@ -81,7 +81,7 @@
 				}else if(data.errno == 2){
 					show_submit_hint('请填写反馈内容。');
 				}else if(data.errno == 3){
-					show_submit_hint('请填写验证码。');
+					show_submit_hint('请填写正确的验证码。');
 				}
 			}else{
 				show_submit_hint('您的反馈内容已经提交成功，谢谢您的反馈。', 'white', 'green');
