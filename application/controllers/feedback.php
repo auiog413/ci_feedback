@@ -140,18 +140,6 @@ class Feedback extends CI_Controller {
 		// 接口应答信息 json 格式
 		die(json_encode(array('errno' => 0, 'msg' => 'success_added.')));
 	}
-
-	/**
-	 * 删除反馈
-	 *
-     * 对应地址:
-     *     http://example.com/index.php/feedback/remove/1,2,3,4,5
-     *
-     * 删除反馈需要登陆
-	 */
-	public function remove($ids = ''){
-
-	}
 }
 
 /* End of file welcome.php */

@@ -134,21 +134,19 @@
 						<div class="portlet-body">
 							<div id="sample_1_wrapper" class="dataTables_wrapper form-inline" role="grid"><div class="table-scrollable"><table class="table table-striped table-bordered table-hover dataTable" id="sample_1" aria-describedby="sample_1_info">
 							<thead>
-							<tr role="row"><th class="sorting_disabled" role="columnheader" rowspan="1" colspan="1" aria-label="" style="width: 32px;"></th><th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="
-									Rendering engine
-								: activate to sort column descending" style="width: 700px;">
+							<tr role="row">
+								<th class="sorting_disabled" role="columnheader" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
+								</th><th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="
+									Rendering engine : activate to sort column descending" style="width: 700px;">
 									反馈内容
 								</th><th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" aria-label="
-									Engine version
-								: activate to sort column ascending" style="width: 150px;">
+									Engine version : activate to sort column ascending" style="width: 150px;">
 									ip地址
 								</th><th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" aria-label="
-									Platform(s)
-								: activate to sort column ascending" style="width: 150px;">
+									Platform(s) : activate to sort column ascending" style="width: 150px;">
 									反馈时间
 								</th><th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" aria-label="
-									CSS grade
-								: activate to sort column ascending" style="width: 80px;">
+									CSS grade : activate to sort column ascending" style="width: 80px;">
 									操作
 								</th></tr>
 							</thead>
@@ -156,12 +154,12 @@
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<?php $seqs = 1; foreach ($fb_list->result() as $item):?>
 									<?php $has_attachment = empty($item->attachments)?0:1;?>
-									<tr class="odd"><?php $colspan=0;?>
+									<tr class="odd" id="fbitem_<?php echo $item->id;?>"><?php $colspan=0;?>
 										<?php $colspan++;?><td class=" "><?php echo $seqs;?></td>
 										<?php $colspan++;?><td class=" sorting_1"><?php echo $item->feed_content;?><?php if($has_attachment){ ?><img src="/statics/image_s.gif" alt="图片附件" style="cursor:pointer;margin-left:5px;" rel="<?php echo $seqs;?>" onclick="var rel_id=jQuery(this).attr('rel');var attachment_obj=jQuery('tr#attachment_'+rel_id);if(attachment_obj.css('display')=='none'){attachment_obj.show();}else{attachment_obj.hide();}"><?php } ?></td>
 										<?php $colspan++;?><td class=" "><?php echo $item->ip;?></td>
 										<?php $colspan++;?><td class=" "><?php echo date('Y-m-d H:i', $item->datetime);?></td>
-										<?php $colspan++;?><td class=" "></td>
+										<?php $colspan++;?><td class=" " align="right"><a data-id="<?php echo $item->id;?>" class="remove_items" id="remove_items_<?php echo $item->id;?>" href="javascript:void(0);">删除</a></td>
 									</tr>
 									<?php if($has_attachment){ ?>
 										<tr id="attachment_<?php echo $seqs;?>" style="display:none;">
@@ -213,4 +211,22 @@
 <!-- END FOOTER -->
 <script src="/statics/jquery-1.8.3.min.js"></script>
 <script src="/statics/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	jQuery('a.remove_items').click(function(){
+		if(!confirm('确定要删除么？')){return false;}
+		var id = jQuery(this).attr('data-id');
+		jQuery.ajax({
+			url: '<?php echo $base_url;?>manage/feedback/remove/',
+			dataType: "json",
+			cache: false,
+			type: 'POST',
+			data: {ids: id},
+			success: function(data){
+				jQuery('tr#fbitem_'+id).remove();
+			}
+		});
+	});
+});
+</script>
 </body></html>

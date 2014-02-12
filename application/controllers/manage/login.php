@@ -19,30 +19,13 @@ class Login extends CI_Controller {
 	 */
 	public function index()
 	{
-		// root => admin
-		$user_list = array(
-			'root' => '4458c1b18f2723473f0d09dba0880653'
-		);
-
+		$this->load->library('auth');
+		
 		$username = $this->input->post('username');
 		$password = $this->input->post('password');
-		$this->load->library('session');
-
-		$login_error = 0;
-		if($username && $password){
-			if($user_list[trim($username)] == md5('sa@#$df' . $password . 'fd$#@as')){
-				$this->session->set_userdata(array('isloggedin' => 'root'));
-				$this->load->helper('url');
-				redirect('manage/feedback/view', 'location', 301);
-			}else{
-				$login_error = 1;
-			}
-		}else{
-			if($this->input->post()){
-				$login_error = 1;
-			}
-		}
-
+		
+		$login_error = $this->auth->login($username, $password);
+		
 		$this->load->view('manage/login', array('login_error' => $login_error));
 	}
 }

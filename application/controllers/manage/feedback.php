@@ -2,6 +2,15 @@
 
 class Feedback extends CI_Controller {
 
+	public function __construct(){
+		parent::__construct();
+		
+		$this->load->library(array('pagination', 'auth'));
+		
+		// 需要登陆
+        $this->auth->need_login();
+	}
+
 	/**
 	 * Index Page for this controller.
 	 *
@@ -24,15 +33,6 @@ class Feedback extends CI_Controller {
 
 	public function view($page = 1)
 	{
-        $this->load->library('session');
-        $this->load->library('pagination');
-        $loggedin = $this->session->userdata('isloggedin');
-
-        if(empty($loggedin) || $loggedin != 'root'){
-        	$this->load->helper('url');
-        	redirect('/manage/login', 'location', 301);
-        }
-
         // 配置分页开始
         // 分页链接
         $p_config['base_url'] = $this->config->item('base_url') . 'manage/feedback/view/'; 
@@ -84,8 +84,38 @@ class Feedback extends CI_Controller {
         $v_data['start'] = $start;
         $v_data['perpage'] = $p_config['per_page'];
         $v_data['total'] = $p_config['total_rows'];
+        $v_data['base_url'] = $this->config->item('base_url');
 
         $this->load->view('manage/feedback_view', $v_data);
+	}
+	
+	/**
+	 * 删除反馈
+	 *
+     * 对应地址:
+     *     http://example.com/index.php/manage/feedback/remove/1,2,3,4,5
+     *
+     * 删除反馈需要登陆
+	 */
+	public function remove(){
+		$ids = $this->input->post('ids');
+		$ids_arr = explode(',', $ids);
+		
+		foreach($ids_arr as $key => $value){
+			if (!empty($value) && is_numeric($value)){
+				$this->db->where('id', $value);
+				$this->db->select('attachments');
+				$query = $this->db->get('feedback_items');
+				$item = $query->row();
+				if($item->attachments && file_exists('.'.$item->attachments)){
+					unlink('.' . $item->attachments);
+				}
+				
+				$this->db->delete('feedback_items', array('id' => $value));
+			}
+		}
+		
+		echo json_encode(array('ids' => $ids));
 	}
 }
 

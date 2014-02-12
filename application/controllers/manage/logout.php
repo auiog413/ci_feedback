@@ -19,11 +19,8 @@ class Logout extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->library('session');
-
-		$this->session->set_userdata(array('isloggedin' => ''));
-		$this->load->helper('url');
-		redirect('manage/login', 'location', 301);
+		$this->load->library('auth');
+		$this->auth->logout();
 	}
 }
 
