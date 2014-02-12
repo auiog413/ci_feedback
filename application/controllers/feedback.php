@@ -54,10 +54,10 @@ class Feedback extends CI_Controller {
 	/**
 	 * 用户主动刷新验证码
 	 */
-	//public function refresh_capthcha()
-	//{
-	//	die($this->generate_captcha());
-	//}
+	public function refresh_capthcha()
+	{
+		die($this->generate_captcha());
+	}
 
 	/**
 	 * Index Page for this controller.
@@ -125,6 +125,11 @@ class Feedback extends CI_Controller {
 		// 插入数据库
 		$this->load->helper('date', 'url');
 		$sertarr = array(
+			'name' 		   => $this->input->post('name'),
+			'title'		   => $this->input->post('title'),
+			'email'		   => $this->input->post('email'),
+			'phone'		   => $this->input->post('phone'),
+			'qq' 		   => $this->input->post('qq'),
 			'feed_content' => $content,
 			'attachments'  => $attachments,
 			'ip' 		   => $this->input->ip_address(),
