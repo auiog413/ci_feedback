@@ -43,7 +43,7 @@
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 				<img alt="" src="/statics/avatar1_small.jpg">
 				<span class="username">
-					root
+					<?php echo $logged_in;?>
 				</span>
 				<i class="fa fa-angle-down"></i>
 				</a>
@@ -137,8 +137,11 @@
 							<tr role="row">
 								<th class="sorting_disabled" role="columnheader" rowspan="1" colspan="1" aria-label="" style="width: 32px;">
 								</th><th class="sorting_asc" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="
-									Rendering engine : activate to sort column descending" style="width: 700px;">
+									Rendering engine : activate to sort column descending" style="width: 550px;">
 									反馈内容
+								</th><th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" aria-label="
+									Engine version : activate to sort column ascending" style="width: 150px;">
+									联系信息
 								</th><th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" aria-label="
 									Engine version : activate to sort column ascending" style="width: 150px;">
 									ip地址
@@ -156,7 +159,15 @@
 									<?php $has_attachment = empty($item->attachments)?0:1;?>
 									<tr class="odd" id="fbitem_<?php echo $item->id;?>"><?php $colspan=0;?>
 										<?php $colspan++;?><td class=" "><?php echo $seqs;?></td>
-										<?php $colspan++;?><td class=" sorting_1"><?php echo $item->feed_content;?><?php if($has_attachment){ ?><img src="/statics/image_s.gif" alt="图片附件" style="cursor:pointer;margin-left:5px;" rel="<?php echo $seqs;?>" onclick="var rel_id=jQuery(this).attr('rel');var attachment_obj=jQuery('tr#attachment_'+rel_id);if(attachment_obj.css('display')=='none'){attachment_obj.show();}else{attachment_obj.hide();}"><?php } ?></td>
+										<?php $colspan++;?><td class="sorting_1" style="white-space:normal;"><?php if($item->title){echo '<strong style="color:green;">[</strong><strong style="color:orange;">' . $item->title . '</strong><strong style="color:green;">]</strong>&nbsp;';} echo $item->feed_content;?><?php if($has_attachment){ ?><a href="<?php echo $item->attachments;?>" target="_blank"><img src="/statics/image_s.gif" alt="图片附件" style="cursor:pointer;margin-left:5px;" rel="<?php echo $seqs;?>" onclick="var rel_id=jQuery(this).attr('rel');var attachment_obj=jQuery('tr#attachment_'+rel_id);if(attachment_obj.css('display')=='none'){attachment_obj.show();}else{attachment_obj.hide();}"></a><?php } ?></td>
+										<?php $colspan++;?>
+										<td><?php
+											$hascontent = '';
+											if ($item->name) {echo $hascontent . '姓名：' . $item->name;$hascontent = '<br />';}
+											if ($item->email){echo $hascontent . '邮箱：' . $item->email;$hascontent = '<br />';}
+											if ($item->phone){echo $hascontent . '电话：' . $item->phone;$hascontent = '<br />';}
+											if ($item->qq)   {echo $hascontent . 'QQ号：' . $item->qq;$hascontent = '<br />';}
+										?></td>
 										<?php $colspan++;?><td class=" "><?php echo $item->ip;?></td>
 										<?php $colspan++;?><td class=" "><?php echo date('Y-m-d H:i', $item->datetime);?></td>
 										<?php $colspan++;?><td class=" " align="right"><a data-id="<?php echo $item->id;?>" class="remove_items" id="remove_items_<?php echo $item->id;?>" href="javascript:void(0);">删除</a></td>
@@ -224,6 +235,7 @@ jQuery(document).ready(function(){
 			data: {ids: id},
 			success: function(data){
 				jQuery('tr#fbitem_'+id).remove();
+				jQuery('tr#attachment_'+id).remove();
 			}
 		});
 	});

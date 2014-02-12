@@ -41,11 +41,11 @@
 		function fbcontent_submit_request(){
 			var content = jQuery('textarea#content').val();
 			if(!content.length){
-				return show_submit_hint('请填写反馈内容。');
+				return show_submit_hint('请填写反馈内容。', '#D893A1', 'red');
 			}
 			var captcha = jQuery('input#captcha').val();
 			if(!captcha.length){
-				return show_submit_hint('请填写验证码。');
+				return show_submit_hint('请填写验证码。', '#D893A1', 'red');
 			}
 			var email = jQuery("input#email").val();
 			if(email){
@@ -54,7 +54,7 @@
 			
 				if(!myreg.test(email))
 				{
-					return show_submit_hint('请填写正确的邮箱地址。');
+					return show_submit_hint('请填写正确的邮箱地址。', '#D893A1', 'red');
 				}
 			}
 			var qq = jQuery('input#qq').val();
@@ -64,7 +64,7 @@
 			
 				if(!qqtest.test(qq))
 				{
-					return show_submit_hint('请填写正确的QQ号码。');
+					return show_submit_hint('请填写正确的QQ号码。', '#D893A1', 'red');
 				}
 			}
 			
@@ -77,11 +77,11 @@
 		function fbcontent_submit_success(data){
 			if(data.errno){
 				if(data.errno == 1){
-					show_submit_hint(data.errmsg);
+					show_submit_hint(data.errmsg, '#D893A1', 'red');
 				}else if(data.errno == 2){
-					show_submit_hint('请填写反馈内容。');
+					show_submit_hint('请填写反馈内容。', '#D893A1', 'red');
 				}else if(data.errno == 3){
-					show_submit_hint('请填写正确的验证码。');
+					show_submit_hint('请填写正确的验证码。', '#D893A1', 'red');
 				}
 			}else{
 				show_submit_hint('您的反馈内容已经提交成功，谢谢您的反馈。', 'white', 'green');

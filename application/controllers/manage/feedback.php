@@ -85,6 +85,7 @@ class Feedback extends CI_Controller {
         $v_data['perpage'] = $p_config['per_page'];
         $v_data['total'] = $p_config['total_rows'];
         $v_data['base_url'] = $this->config->item('base_url');
+        $v_data['logged_in'] = $this->auth->get_logged_in();
 
         $this->load->view('manage/feedback_view', $v_data);
 	}
