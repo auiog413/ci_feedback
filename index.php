@@ -38,6 +38,7 @@ if (defined('ENVIRONMENT'))
 	
 		case 'testing':
 		case 'production':
+		case 'production_anysrv':
 			error_reporting(0);
 		break;
 
