@@ -49,8 +49,8 @@ $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = '127.0.0.1';
-$db['default']['username'] = '';
-$db['default']['password'] = '';
+$db['default']['username'] = 'installer';
+$db['default']['password'] = '7y#hHk*ks!';
 $db['default']['database'] = 'installer_feed';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
