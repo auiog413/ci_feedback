@@ -159,7 +159,7 @@
 									<?php $has_attachment = empty($item->attachments)?0:1;?>
 									<tr class="odd" id="fbitem_<?php echo $item->id;?>"><?php $colspan=0;?>
 										<?php $colspan++;?><td class=" "><?php echo $seqs;?></td>
-										<?php $colspan++;?><td class="sorting_1" style="white-space:normal;"><?php if($item->title){echo '<strong style="color:green;">[</strong><strong style="color:orange;">' . $item->title . '</strong><strong style="color:green;">]</strong>&nbsp;';} echo $item->feed_content;?><?php if($has_attachment){ ?><a href="<?php echo $item->attachments;?>" target="_blank"><img src="/statics/image_s.gif" alt="图片附件" style="cursor:pointer;margin-left:5px;" rel="<?php echo $seqs;?>" onclick="var rel_id=jQuery(this).attr('rel');var attachment_obj=jQuery('tr#attachment_'+rel_id);if(attachment_obj.css('display')=='none'){attachment_obj.show();}else{attachment_obj.hide();}"></a><?php } ?></td>
+										<?php $colspan++;?><td class="sorting_1" style="white-space:normal;"><?php if($item->title){echo '<strong style="color:green;">[</strong><strong style="color:orange;">' . $item->title . '</strong><strong style="color:green;">]</strong>&nbsp;';} echo $item->feed_content;?><?php if($has_attachment){ ?><a href="<?php echo $item->attachments;?>" target="_blank"><img src="/statics/image_s.gif" alt="图片附件" style="cursor:pointer;margin-left:5px;" rel="<?php echo $seqs;?>" ></a><?php } ?></td>
 										<?php $colspan++;?>
 										<td><?php
 											$hascontent = '';
