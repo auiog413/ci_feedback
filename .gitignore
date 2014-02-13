@@ -1,5 +1,5 @@
-/statics/fb_uploads/
-/statics/captcha/
+/statics/fb_uploads/*
+/statics/captcha/*
 /application/cache/*
 !/application/cache/index.html
 !/application/cache/.htaccess
