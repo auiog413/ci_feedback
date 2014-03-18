@@ -39,6 +39,18 @@
         return true;
     }
 
+        function testemail()
+        {
+                var email = $(".emailtext").val();
+                if (email == '') {return true;}
+                var myreg = /^[a-zA-Z0-9_-]+([a-zA-Z0-9_-]|\.)+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{1,}){1,2})$/;
+                if(!myreg.test(email)){
+                        return false;
+                }else{
+                        return true;
+                }
+        }
+
     // 投票按钮效果
     function think_btn(id){
         var current_node = $('#'+id);
@@ -92,6 +104,11 @@
             if (!check_all_needed_fields(true)){
                 return false;
             }
+
+            if (!testemail()){
+                    alert('The email address you typed is invalid.');
+                        return false;
+                }
 
       var options = {
         target:        '#response_hints_msg',   // target element(s) to be updated with server response
@@ -179,7 +196,7 @@ form .tryanother:hover{text-decoration:underline;}
         <div style="margin-top:12px;"><input type="text" name="captcha" id="captcha" onblur="check_all_needed_fields(false);" class="seccode" placeholder="Type the above word" /><strong class="required_star">*</strong></div>
         <div style="margin-top:12px;font-size:16px;"><input type="checkbox" id="filled_email" name="filled_email" style="margin-right:2px;" onclick="filled_email_check(this.id);" />Check here to let us contact you to follow up on you feedback.</div>
         <span id="email_area" style="display:none;">
-                <div style="margin-top:12px;"><input type="text" class="emailtext" name="email" placeholder="Email address (optional)" /></div>
+                <div style="margin-top:12px;"><input onblur="if(!testemail()){alert('The email address is invalid.')}" type="text" class="emailtext" name="email" placeholder="Email address (optional)" /></div>
                 <div class="emailnotice">Your email addresses will keep private. We understand your privacy is important.</div>
         </span>
         <div style="margin-top:30px;">
