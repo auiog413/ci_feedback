@@ -17,9 +17,9 @@
       return true;
     }
 
-    function check_all_needed_fields(){
+    function check_all_needed_fields(alertmsg){
         if( $('#think_result').val() == ''){
-                alert('What do you think of Cocos Code IDE?');
+                if(alertmsg == true) alert('What do you think of Cocos Code IDE?');
                 return false;
         }
 
@@ -53,7 +53,7 @@
                         .removeClass('span_normal')
                         .addClass('span_unselect')
                         .attr('rel', '0');
-                check_all_needed_fields();
+                check_all_needed_fields(false);
         }else{
                 $('#think_result').val('');
                 current_node.attr('rel', '0')
@@ -89,7 +89,7 @@
         }
 
     function fbcontent_submit(){
-            if (!check_all_needed_fields()){
+            if (!check_all_needed_fields(true)){
                 return false;
             }
 
@@ -172,11 +172,11 @@ form .tryanother:hover{text-decoration:underline;}
           <div style="clear:both;"></div>
         </div>
         <div style="margin-top:12px;color:#2a2a2a;font-size:16px;">What would you like to share with us?<strong class="required_star">*</strong></div>
-        <div style="margin-top:5px;position:relative;"><div id="word_counts" class="word_counts">1000</div><textarea name="content" id="content" onblur="check_all_needed_fields();"></textarea></div>
+        <div style="margin-top:5px;position:relative;"><div id="word_counts" class="word_counts">1000</div><textarea name="content" id="content" onblur="check_all_needed_fields(false);"></textarea></div>
         <input type="file" name="attachment" style="margin-top:12px;" /><br />
         <div style="margin-top:12px;font-size:14px;color:#2a2a2a;">Allowed type: *.jpg,*.png,*.gif,*.rar,*.zip. Max filesize: 2M</div>
         <div style="margin-top:12px;"><span id="captcha_area"><?php echo $captcha_image;?></span><span class="tryanother" onclick="return refresh_capthcha();">Try another</span></div><!-- 垂直对齐 -->
-        <div style="margin-top:12px;"><input type="text" name="captcha" id="captcha" onblur="check_all_needed_fields();" class="seccode" placeholder="Type the above word" /><strong class="required_star">*</strong></div>
+        <div style="margin-top:12px;"><input type="text" name="captcha" id="captcha" onblur="check_all_needed_fields(false);" class="seccode" placeholder="Type the above word" /><strong class="required_star">*</strong></div>
         <div style="margin-top:12px;font-size:16px;"><input type="checkbox" id="filled_email" name="filled_email" style="margin-right:2px;" onclick="filled_email_check(this.id);" />Check here to let us contact you to follow up on you feedback.</div>
         <span id="email_area" style="display:none;">
                 <div style="margin-top:12px;"><input type="text" class="emailtext" name="email" placeholder="Email address (optional)" /></div>

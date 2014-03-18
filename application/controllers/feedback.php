@@ -17,14 +17,15 @@ class Feedback extends CI_Controller {
          */
         private function generate_captcha(){
                 $val_arr = array(
-                        'word'                  => random_string('alnum', 4),
+                        'word'                  => strtoupper(random_string('alnum', 4)),
                         'img_path'              => './statics/captcha/',
                         'img_url'               => $this->config->item('base_url') . 'statics/captcha/',
                         'img_width'             => 170,
-                        'img_height'            => 64
+                        'img_height'            => 64,
+                        'font_path'             => './statics/font/CONSOLA.TTF'
                 );
 
-                $captcha = create_captcha($val_arr);
+                $captcha = create_captcha_blue($val_arr);
                 $flash_session['word'] = $captcha['word'];
                 $flash_session['file'] = $val_arr['img_path'] . $captcha['time'] . '.jpg';
                 $this->session->set_flashdata('captcha', json_encode($flash_session));
@@ -95,7 +96,7 @@ class Feedback extends CI_Controller {
 
                 // 验证码
                 if(!$this->validate_captcha($this->input->post('captcha'))){
-                        die(json_encode(array('errno' => 3, 'errmsg' => 'captcha_code_error.')));
+                        die(json_encode(array('errno' => 3, 'errmsg' => 'Verification code ERROR.')));
                 }
 
                 // 附件上传
