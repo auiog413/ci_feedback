@@ -154,7 +154,7 @@ form .cancel:hover{text-decoration: underline;}
 form .seccode{width:162px;height:24px;line-height:24px;padding:3px;border:#e2e2e4 solid 1px;}
 form .vote_btns{margin-top:5px;padding-left:9px;}
 form .vote_btns span{padding-left:33px;width:60px;float:left;display:block;height:26px;padding-top:10px;color:#4d4d4d;font-size:14px;}
-form .vote_btns span:hover{cursor:pointer;opacity:0.6}
+form .vote_btns span:hover{cursor:pointer;opacity:0.8}
 form .vote_btns .span_unselect{opacity:0.3;}
 form .vote_btns .span_unselect:hover{opacity:1;}
 form .vote_btns .span_select{opacity:1;}
