@@ -179,7 +179,7 @@ form .tryanother:hover{text-decoration:underline;}
         <input type="hidden" name="version" value="<?php echo $version; ?>" />
         <input type="hidden" name="os" value="<?php echo $os; ?>" />
         <h4 class="form_title">Feedback Forum</h4>
-        <div style="margin-top:8px;color:#4e4e4e;font-size:14px;"><strong class="required_star" style="font-size:14px;">*</strong> indicates a required field</div>
+        <div style="margin-top:8px;color:#aaaaab;font-size:14px;"><strong class="required_star" style="font-size:14px;">*</strong> indicates a required field</div>
         <div style="margin-top:26px;color:#2a2a2a;font-size:16px;">What do you think of Cocos Code IDE?<strong class="required_star">*</strong></div>
         <div class="vote_btns">
           <input type="hidden" id="think_result" name="think_result" value="" />
