@@ -136,7 +136,7 @@
 .header{height:34px;margin:auto;padding-top:6px;background-color:#2d2d2d;width:100%;}
 .header h3{font-size:24px;text-align:center;font-family:"Arial";font-weight:bold;color:#ffffff;}
 .main{margin-top:56px;font-family:"Tahoma";}
-.content{width:568px;padding:38px 83px;background-color:#fdfdff;position:relative;left:50%;border-radius:5px;margin-left:-367px;-webkit-box-shadow:0px 0px 4px #818181;;-moz-box-shadow:0px 0px 4px #818181;;box-shadow:0px 0px 4px #818181;;}
+.content{width:568px;padding:38px 83px;background-color:#fdfdff;position:relative;left:50%;border-radius:5px;margin-left:-367px;}
 .form_title{font-size:26px;color:#029bdb;border-bottom:#ddd dashed 1px;padding-bottom:8px;font-weight:normal;}
 .required_star{font-weight:bold;color:#ffa800;font-size:16px;margin-left:5px;}
 .content .tape{background:url(statics/tape.png) no-repeat;width:154px;height:54px;position:absolute;top:-28px;left:291px;}
@@ -147,18 +147,18 @@ form .emailtext{height:24px;padding:3px;width:276px;border:#e2e2e4 solid 1px;lin
 form .emailnotice{margin-top:9px;padding:5px 8px;border:#e0f7ff solid 1px;background-color:#f4fcfe;font-size:14px;}
 form .submit_btn{width:122px;height:24px;padding:5px 23px;display:block;text-decoration: none;float:left;}
 form .submit_btn_enabled{background:url(statics/Submit_btn1.png) no-repeat;color:#ffffff;}
-form .submit_btn_enabled:hover{background:url(statics/Submit_btn1_hover.png) no-repeat;text-decoration: underline;}
+form .submit_btn_enabled:hover{background:url(statics/Submit_btn1_hover.png) no-repeat;}
 form .submit_btn_disabled{background:url(statics/Submit_btn0.png) no-repeat;color:#4b4a4a;}
 form .cancel{display:block;float:left;margin-top:5px;margin-left:10px;color:#898989;text-decoration: none;}
 form .cancel:hover{text-decoration: underline;}
 form .seccode{width:162px;height:24px;line-height:24px;padding:3px;border:#e2e2e4 solid 1px;}
 form .vote_btns{margin-top:5px;padding-left:9px;}
 form .vote_btns span{padding-left:33px;width:60px;float:left;display:block;height:26px;padding-top:10px;color:#4d4d4d;font-size:14px;}
-form .vote_btns span:hover{cursor:pointer;opacity:1.0}
+form .vote_btns span:hover{cursor:pointer;opacity:0.6}
 form .vote_btns .span_unselect{opacity:0.3;}
 form .vote_btns .span_unselect:hover{opacity:1;}
 form .vote_btns .span_select{opacity:1;}
-form .vote_btns .span_normal{opacity:0.6;}
+form .vote_btns .span_normal{opacity:1;}
 form .vote_btns .btn_like{background:url(statics/Like.png) no-repeat;}
 form .vote_btns .btn_neutral{background:url(statics/Neutral.png) no-repeat;}
 form .vote_btns .btn_dislike{background:url(statics/Dislike.png) no-repeat;}
@@ -179,7 +179,7 @@ form .tryanother:hover{text-decoration:underline;}
         <input type="hidden" name="version" value="<?php echo $version; ?>" />
         <input type="hidden" name="os" value="<?php echo $os; ?>" />
         <h4 class="form_title">Feedback Forum</h4>
-        <div style="margin-top:8px;color:#aaaaab;font-size:14px;"><strong class="required_star" style="font-size:14px;">*</strong> indicates a required field</div>
+        <div style="margin-top:8px;color:#aaaaab;font-size:14px;"><strong class="required_star">*</strong> indicates a required field</div>
         <div style="margin-top:26px;color:#2a2a2a;font-size:16px;">What do you think of Cocos Code IDE?<strong class="required_star">*</strong></div>
         <div class="vote_btns">
           <input type="hidden" id="think_result" name="think_result" value="" />
