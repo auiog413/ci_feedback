@@ -25,14 +25,12 @@
 
         if( $('#content').val() == '' ){
                 $('#content').css({'borderColor':'red'});
-                $('#content').focus();
                 setTimeout(function(){$('#content').css({'borderColor':'#e2e2e4'});}, 3000);
                 return false;
         }
 
         if( $('#captcha').val() == '' ){
                 $('#captcha').css({'borderColor':'red'});
-                $('#captcha').focus();
                 setTimeout(function(){$('#captcha').css({'borderColor':'#e2e2e4'});}, 3000);
                 return false;
         }
