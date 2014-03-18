@@ -132,11 +132,11 @@
 <title>Feedback Forum | Cocos Code IDE</title>
 <style type="text/css" rel="stylesheet">
 *{margin:0;padding:0;}
-.container{width:100%;height:100%;background:url(statics/bg_main.png) repeat;position:absolute;}
+.container{width:100%;height:100%;min-height:880px;background:url(statics/bg_main.png) repeat;position:absolute;}
 .header{height:34px;margin:auto;padding-top:6px;background-color:#2d2d2d;width:100%;}
 .header h3{font-size:24px;text-align:center;font-family:"Arial";font-weight:bold;color:#ffffff;}
 .main{margin-top:56px;font-family:"Tahoma";}
-.content{width:568px;padding:38px 83px;background-color:#fdfdff;position:relative;left:50%;border-radius:5px;margin-left:-367px;-webkit-box-shadow:0px 0px 2px #818181;;-moz-box-shadow:0px 0px 2px #818181;;box-shadow:0px 0px 2px #818181;}
+.content{width:568px;padding:38px 83px;background-color:#fdfdff;position:relative;left:50%;border-radius:6px;margin-left:-367px;-webkit-box-shadow:0px 0px 4px -1px #3A3A3A;-moz-box-shadow:0px 0px 4px -1px #3A3A3A;box-shadow:0px 0px 4px -1px #3A3A3A;}
 .form_title{font-size:26px;color:#029bdb;border-bottom:#ddd dashed 1px;padding-bottom:8px;font-weight:normal;}
 .required_star{font-weight:bold;color:#ffa800;font-size:16px;margin-left:5px;}
 .content .tape{background:url(statics/tape.png) no-repeat;width:154px;height:54px;position:absolute;top:-28px;left:291px;}
