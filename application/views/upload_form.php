@@ -84,6 +84,7 @@
                 if(data.errno > 0)
                 {
                         alert(data.errmsg);
+                        refresh_capthcha();
                 }else{
                         window.location.href="/feedback/success";
                 }
@@ -174,7 +175,8 @@ form .tryanother:hover{text-decoration:underline;}
         </div>
         <div style="margin-top:12px;color:#2a2a2a;font-size:16px;">What would you like to share with us?<strong class="required_star">*</strong></div>
         <div style="margin-top:5px;position:relative;"><div id="word_counts" class="word_counts">1000</div><textarea name="content" id="content" onblur="check_all_needed_fields();"></textarea></div>
-        <input type="file" name="attachment" style="margin-top:12px;" />
+        <input type="file" name="attachment" style="margin-top:12px;" /><br />
+        <div style="margin-top:12px;font-size:14px;color:#2a2a2a;">Allowed type: *.jpg,*.png,*.gif,*.rar,*.zip. Max filesize: 2M</div>
         <div style="margin-top:12px;"><span id="captcha_area"><?php echo $captcha_image;?></span><span class="tryanother" onclick="return refresh_capthcha();">Try another</span></div><!-- 垂直对齐 -->
         <div style="margin-top:12px;"><input type="text" name="captcha" id="captcha" onblur="check_all_needed_fields();" class="seccode" placeholder="Type the above word" /><strong class="required_star">*</strong></div>
         <div style="margin-top:12px;font-size:16px;"><input type="checkbox" id="filled_email" name="filled_email" style="margin-right:2px;" onclick="filled_email_check(this.id);" />Check here to let us contact you to follow up on you feedback.</div>
