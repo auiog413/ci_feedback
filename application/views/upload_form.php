@@ -1,277 +1,197 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-	<script src="/statics/jquery-1.8.3.min.js"></script>
-	<script src="/statics/jquery.form.js"></script>
-	<script type="text/javascript">
-		function refresh_capthcha(){
-			jQuery.ajax({
-				url: "<?php echo $base_url;?>feedback/refresh_capthcha",
-				dataType: "text",
-				cache: false,
-				success: function(data){
-					jQuery('span#captcha_area').html(data);
-					return true;
-				}
-			});
-			return true;
-		}
-		
-		// 参数列表说明： 提示内容，提示的背景颜色，提示的内容颜色
-		function show_submit_hint(content,bgcolor,fgcolor){
-			jQuery('tr#response_hints').css('display','');
-			// 设置背景颜色
-			if(bgcolor) jQuery('tr#response_hints td').css('backgroundColor',bgcolor);
-			// 设置前景颜色
-			if(fgcolor) jQuery('span#response_hints_msg').css('color',fgcolor);
-			// 设置内容
-			jQuery('span#response_hints_msg').html(content);
-			
-			return false;
-		}
-		
-		function hide_submit_hint(){
-			jQuery('tr#response_hints').css('display','none');
-			jQuery('span#response_hints_msg').html('');
-		}
-		
-		/**
-		 * 提交前的校验
-		 */
-		function fbcontent_submit_request(){
-			var content = jQuery('textarea#content').val();
-			if(!content.length){
-				return show_submit_hint('请填写反馈内容。', '#D893A1', 'red');
-			}
-			var captcha = jQuery('input#captcha').val();
-			if(!captcha.length){
-				return show_submit_hint('请填写验证码。', '#D893A1', 'red');
-			}
-			var email = jQuery("input#email").val();
-			if(email){
-				//对电子邮件的验证
-				var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-			
-				if(!myreg.test(email))
-				{
-					return show_submit_hint('请填写正确的邮箱地址。', '#D893A1', 'red');
-				}
-			}
-			var qq = jQuery('input#qq').val();
-			if(qq){
-				//对qq号进行验证
-				var qqtest = /^\d{5,13}$/;
-			
-				if(!qqtest.test(qq))
-				{
-					return show_submit_hint('请填写正确的QQ号码。', '#D893A1', 'red');
-				}
-			}
-			
-			return true;
-		}
-		
-		/**
-		 * 提交成功之后的处理
-		 */
-		function fbcontent_submit_success(data){
-			if(data.errno){
-				if(data.errno == 1){
-					show_submit_hint(data.errmsg, '#D893A1', 'red');
-				}else if(data.errno == 2){
-					show_submit_hint('请填写反馈内容。', '#D893A1', 'red');
-				}else if(data.errno == 3){
-					show_submit_hint('请填写正确的验证码。', '#D893A1', 'red');
-				}
-			}else{
-				show_submit_hint('您的反馈内容已经提交成功，谢谢您的反馈。', 'white', 'green');
-				jQuery('form#feedback_form')[0].reset();
-				refresh_capthcha();
-				setTimeout(function(){hide_submit_hint();},5000);
-			}
-		}
-		
-		function fbcontent_submit(){
-			hide_submit_hint();
-			
-			var options = { 
-				target:        '#response_hints_msg',   // target element(s) to be updated with server response 
-				beforeSubmit:  fbcontent_submit_request,  // pre-submit callback 
-				success:       fbcontent_submit_success,  // post-submit callback 
-				dataType:      'json',
-				
-				// other available options: 
-				//clearForm: true        // clear all form fields after successful submit 
-				//resetForm: true        // reset the form after successful submit
-				//timeout:   3000 
-			}; 
-		 
-			// inside event callbacks 'this' is the DOM element so we first 
-			// wrap it in a jQuery object and then invoke ajaxSubmit 
-			$('#feedback_form').ajaxSubmit(options); 
-	 
-			// !!! Important !!! 
-			// always return false to prevent standard browser submit and page navigation 
-			return false; 
-		}
-	</script>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>用户反馈</title>
-  <style>
-	td {  font-family: "宋体"; font-size: 9pt; line-height: 150%; color: #000000; text-decoration: none}
-	.top a{
-		font-size: 10pt;
-		color: 006CC6;
-		text-decoration: none;
-		font-weight: bold;
-	} 
-	.top a:hover{
-		font-size: 10pt;
-		color: 006CC6;
-		text-decoration: underline;
-		font-weight: bold;
-	}
-	.font1 {  font-family: "宋体"; font-size: 10pt; font-weight: normal; color: #840000}
-	a {  font-family: "宋体"; font-size: 9pt; color: #000000; text-decoration: none}
-	a:hover {  font-family: "宋体"; font-size: 9pt; color: #000000; text-decoration: underline}
-	.table3 {  border: 1px solid #ACCCEA}
-	.font2 {
-		font-size: 10pt;
-		color: 006CC6;
-		line-height: 180%;
-		font-weight: bold;
-	}
+  <script src="/statics/jquery-1.8.3.min.js"></script>
+  <script src="/statics/jquery.form.js"></script>
+  <script type="text/javascript">
+    function refresh_capthcha(){
+      jQuery.ajax({
+        url: "<?php echo $base_url;?>feedback/refresh_capthcha",
+        dataType: "text",
+        cache: false,
+        success: function(data){
+          jQuery('span#captcha_area').html(data);
+          return true;
+        }
+      });
+      return true;
+    }
 
-	.txt {  
-	border: #999999; border-style: solid; border-width:1px;font-size:12px; 
-	}
-	.button {  
-		font-family: "Verbigna", "Arial", "Helvetica", "sans-serif"; 
-		font-size: 12px; 
-		height: 20px; 
-		border-style: solid; border-width:1px;border-color:#000000;
-		background-color:#EBEADB
-	}
-	
-	.button:hover {  
-		font-family: "Verbigna", "Arial", "Helvetica", "sans-serif"; 
-		font-size: 12px; 
-		height: 20px;
-		text-decoration:none;
-	}
-	
-	.PropelPager {
-	  width : 100%;
-	  height : 20px
-	}
+    function check_all_needed_fields(){
+        if( $('#think_result').val() == ''){
+                alert('What do you think of Cocos Code IDE?');
+                return false;
+        }
 
-	.PropelPagerSummary {
-	  float : left;
-	  width : 40%
-	}
+        if( $('#content').val() == '' ){
+                $('#content').css({'borderColor':'red'});
+                $('#content').focus();
+                setTimeout(function(){$('#content').css({'borderColor':'#e2e2e4'});}, 3000);
+                return false;
+        }
 
-	.PropelPagerDigit {
-	  color : red;
-	  text-decoration : underline
-	}
+        if( $('#captcha').val() == '' ){
+                $('#captcha').css({'borderColor':'red'});
+                $('#captcha').focus();
+                setTimeout(function(){$('#captcha').css({'borderColor':'#e2e2e4'});}, 3000);
+                return false;
+        }
 
-	.PropelPagerNav {
-	  float : right;
-	  width : 50%;
-	  text-align : right;
-	  padding-right : 25px
-	}
+        $('#submit_btn').removeClass('submit_btn_disabled').addClass('submit_btn_enabled');
+        return true;
+    }
 
-	.PropelPagerNav a {
-	  color : #4B6D9B;
-	  text-decoration : none
-	}
+    // 投票按钮效果
+    function think_btn(id){
+        var current_node = $('#'+id);
+        if(current_node.attr('rel') == '0'){
+                $('#think_result').val(current_node.html());
+                current_node.attr('rel', '1')
+                        .removeClass('span_normal')
+                        .removeClass('span_unselect')
+                        .addClass('span_select')
+                    .siblings('span')
+                        .removeClass('span_select')
+                        .removeClass('span_normal')
+                        .addClass('span_unselect')
+                        .attr('rel', '0');
+                check_all_needed_fields();
+        }else{
+                $('#think_result').val('');
+                current_node.attr('rel', '0')
+                        .removeClass('span_select')
+                        .removeClass('span_unselect')
+                        .addClass('span_normal')
+                        .siblings('span')
+                        .removeClass('span_unselect')
+                        .removeClass('span_select')
+                        .addClass('span_normal')
+                        .attr('rel', '0');
+                $('#submit_btn').addClass('submit_btn_disabled').removeClass('submit_btn_enabled');
+        }
+    }
 
-	.PropelPagerNav a:hover {
-	  color : #f00;
-	  text-decoration : underline
-	}
+    // 是否选择填写邮箱
+    function filled_email_check(check_input){
+        if($('#'+check_input).attr('checked') == 'checked'){
+                $('span#email_area').show();
+        }else{
+                $('span#email_area').hide();
+        }
+    }
 
-	.PropelPagerForm {
-	  font-size : 12px
-	}
-  </style>
-  </head>
+    function fbcontent_submit_success(data) {
+                if(data.errno > 0)
+                {
+                        alert(data.errmsg);
+                }else{
+                        window.location.href="/feedback/success";
+                }
+        }
 
-<body bgcolor="#FFFFFF" leftmargin="0" topmargin="0">
-  <br />
+    function fbcontent_submit(){
+            if (!check_all_needed_fields()){
+                return false;
+            }
 
-  <table width="579" height="43" border="0" align="center" cellpadding="0" cellspacing="0">
-    <tr>
-      <td valign="top"><img src="/statics/advice_01.gif" width="579" height="38" /></td>
-    </tr>
-  </table>
-  
-  <?php echo form_open_multipart('feedback/add', array('id' => 'feedback_form'));?>
-  <table width="579" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#84C7E7">
-	<tr>
-      <td bgcolor="#FFFFFF" colspan="2">标 <strong style="color:red;">*</strong> 的为必填项</td>
-    </tr>
-    <tr>
-      <td width="88" align="center" bgcolor="#D2EEFC">姓名</td>
-      <td width="412" bgcolor="#FFFFFF"><input name="name" type="text" class="table3" size="15" /></td>
-    </tr>
+      var options = {
+        target:        '#response_hints_msg',   // target element(s) to be updated with server response
+        beforeSubmit:  check_all_needed_fields,  // pre-submit callback
+        success:       fbcontent_submit_success,  // post-submit callback
+        dataType:      'json',
 
-    <tr>
-      <td align="center" bgcolor="#D2EEFC">标题</td>
-      <td bgcolor="#FFFFFF"><input name="title" type="text" class="table3" size="50" /></td>
-    </tr>
+        // other available options:
+        //clearForm: true        // clear all form fields after successful submit
+        //resetForm: true        // reset the form after successful submit
+        //timeout:   3000
+      };
 
-    <tr>
-      <td align="center" bgcolor="#D2EEFC">电子邮件</td>
-      <td bgcolor="#FFFFFF"><input name="email" id="email" type="text" class="table3" size="30" /></td>
-    </tr>
-
-    <tr>
-      <td align="center" bgcolor="#D2EEFC">联系电话</td>
-      <td bgcolor="#FFFFFF"><input name="phone" type="text" class="table3" size="30" /></td>
-    </tr>
-
-	<tr>
-      <td align="center" bgcolor="#D2EEFC">QQ</td>
-      <td bgcolor="#FFFFFF"><input name="qq" id="qq" type="text" class="table3" size="30" /></td>
-    </tr>
-
-    <tr>
-      <td align="center" bgcolor="#D2EEFC">反馈内容 <strong style="color:red;">*</strong> </td>
-      <td bgcolor="#FFFFFF">
-		<textarea name="content" id="content" style="width:473px;height:180px;" class="table3" placeholder="[必填]输入您的反馈"></textarea>
-	  </td>
-    </tr>
-	
-    <tr>
-      <td align="center" bgcolor="#D2EEFC">附件</td>
-      <td bgcolor="#FFFFFF"><input name="attachment" type="file" size="20" /></td>
-    </tr>
-	
-	<tr>
-      <td align="center" bgcolor="#D2EEFC">验证码 <strong style="color:red;">*</strong> </td>
-      <td bgcolor="#FFFFFF"><input name="captcha" id="captcha" type="text" class="table3" size="30" /><br /><span id="captcha_area"><?php echo $captcha_image;?></span><a onclick="return refresh_capthcha();" style="text-decoration:none;color:green;vertical-align:top;margin-left:10px;cursor:pointer;">看不清</a></td>
-    </tr>
-    
-	<tr id="response_hints" style="display:none;">
-      <td style="background-color:#D893A1;" align="left" colspan="2">
-		  <span id="response_hints_msg" style="font-weight:bold;color:red;"></span>
-      </td>
-    </tr>
-    
-    <tr>
-      <td bgcolor="#D2EEFC" align="center" colspan="2">
-        <a href="javascript:void(0);" class="button" style="padding:1px 6px 2px 5px;" onclick="fbcontent_submit();">提交</a>
-        <a href="javascript:void(0);" class="button" style="padding:1px 6px 2px 5px;" onclick="window.opener=null;window.open('','_self');window.close();">取消</a></td>
-    </tr>
-    
-    <tr align="center" bgcolor="#D2EEFC">
-      <td height="45" colspan="2">您也可以直接与我们的客服人员联系<br />
-      联系电话： | 联系人： | 邮箱： | 传真：</td>
-    </tr>
-
-  </table>
-  </form>
+      // inside event callbacks 'this' is the DOM element so we first
+      // wrap it in a jQuery object and then invoke ajaxSubmit
+      $('#feedback_form').ajaxSubmit(options);
+      return false;
+    }
+  </script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Feedback Forum | Cocos Code IDE</title>
+<style type="text/css" rel="stylesheet">
+*{margin:0;padding:0;}
+.container{width:100%;height:100%;background:url(statics/bg_main.png) repeat;position:absolute;}
+.header{height:34px;margin:auto;padding-top:6px;background-color:#2d2d2d;width:100%;}
+.header h3{font-size:24px;text-align:center;font-family:"Arial";font-weight:bold;color:#ffffff;}
+.main{margin-top:56px;font-family:"Tahoma";}
+.content{width:568px;padding:38px 83px;background-color:#fdfdff;position:relative;left:50%;border-radius:5px;margin-left:-367px;-webkit-box-shadow:0px 0px 4px #818181;;-moz-box-shadow:0px 0px 4px #818181;;box-shadow:0px 0px 4px #818181;;}
+.form_title{font-size:26px;color:#029bdb;border-bottom:#ddd dashed 1px;padding-bottom:8px;font-weight:normal;}
+.required_star{font-weight:bold;color:#ffa800;font-size:16px;margin-left:5px;}
+.content .tape{background:url(statics/tape.png) no-repeat;width:154px;height:54px;position:absolute;top:-28px;left:291px;}
+.content .shadow{background:url(statics/shadow.png) no-repeat;width:954px;height:100px;position:absolute;bottom:-100px;left:0px;}
+.captcha_area img{border:#e2e3e5 solid 1px;}
+form textarea{height:118px;width:560px;padding:3px;border:#e2e2e4 solid 1px;}
+form .emailtext{height:24px;padding:3px;width:276px;border:#e2e2e4 solid 1px;line-height:24px;}
+form .emailnotice{margin-top:9px;padding:5px 8px;border:#e0f7ff solid 1px;background-color:#f4fcfe;font-size:14px;}
+form .submit_btn{width:122px;height:24px;padding:5px 23px;display:block;text-decoration: none;float:left;}
+form .submit_btn_enabled{background:url(statics/Submit_btn1.png) no-repeat;color:#ffffff;}
+form .submit_btn_enabled:hover{background:url(statics/Submit_btn1_hover.png) no-repeat;text-decoration: underline;}
+form .submit_btn_disabled{background:url(statics/Submit_btn0.png) no-repeat;color:#4b4a4a;}
+form .cancel{display:block;float:left;margin-top:5px;margin-left:10px;color:#898989;text-decoration: none;}
+form .cancel:hover{text-decoration: underline;}
+form .seccode{width:162px;height:24px;line-height:24px;padding:3px;border:#e2e2e4 solid 1px;}
+form .vote_btns{margin-top:5px;padding-left:9px;}
+form .vote_btns span{padding-left:33px;width:60px;float:left;display:block;height:26px;padding-top:10px;color:#4d4d4d;font-size:14px;}
+form .vote_btns span:hover{cursor:pointer;opacity:1.0}
+form .vote_btns .span_unselect{opacity:0.3;}
+form .vote_btns .span_unselect:hover{opacity:1;}
+form .vote_btns .span_select{opacity:1;}
+form .vote_btns .span_normal{opacity:0.6;}
+form .vote_btns .btn_like{background:url(statics/Like.png) no-repeat;}
+form .vote_btns .btn_neutral{background:url(statics/Neutral.png) no-repeat;}
+form .vote_btns .btn_dislike{background:url(statics/Dislike.png) no-repeat;}
+form .word_counts{position:absolute;top:-24px;right:0px;color:#c3c3c3;font-size:14px;}
+form .tryanother{margin-left:4px;color:#029adb;font-size:14px;cursor:pointer;}
+form .tryanother:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+<div class="container">
+        <div class="header">
+                <h3>Cocos Code IDE</h3>
+        </div>
+        <div class="main">
+                <div class="content">
+      <div class="tape"></div>
+      <?php echo form_open_multipart('feedback/add', array('id' => 'feedback_form'));?>
+        <input type="hidden" name="version" value="<?php echo $version; ?>" />
+        <input type="hidden" name="os" value="<?php echo $os; ?>" />
+        <h4 class="form_title">Feedback Forum</h4>
+        <div style="margin-top:8px;color:#4e4e4e;font-size:14px;"><strong class="required_star" style="font-size:14px;">*</strong> indicates a required field</div>
+        <div style="margin-top:26px;color:#2a2a2a;font-size:16px;">What do you think of Cocos Code IDE?<strong class="required_star">*</strong></div>
+        <div class="vote_btns">
+          <input type="hidden" id="think_result" name="think_result" value="" />
+          <span id="btn_like" class="btn_like span_normal" rel="0" onclick="think_btn(this.id)">Like</span>
+          <span id="btn_neutral" class="btn_neutral span_normal" rel="0" onclick="think_btn(this.id)">Neutral</span>
+          <span id="btn_dislike" class="btn_dislike span_normal" rel="0" onclick="think_btn(this.id)">Dislike</span>
+          <div style="clear:both;"></div>
+        </div>
+        <div style="margin-top:12px;color:#2a2a2a;font-size:16px;">What would you like to share with us?<strong class="required_star">*</strong></div>
+        <div style="margin-top:5px;position:relative;"><div id="word_counts" class="word_counts">1000</div><textarea name="content" id="content" onblur="check_all_needed_fields();"></textarea></div>
+        <input type="file" name="attachment" style="margin-top:12px;" />
+        <div style="margin-top:12px;"><span id="captcha_area"><?php echo $captcha_image;?></span><span class="tryanother" onclick="return refresh_capthcha();">Try another</span></div><!-- 垂直对齐 -->
+        <div style="margin-top:12px;"><input type="text" name="captcha" id="captcha" onblur="check_all_needed_fields();" class="seccode" placeholder="Type the above word" /><strong class="required_star">*</strong></div>
+        <div style="margin-top:12px;font-size:16px;"><input type="checkbox" id="filled_email" name="filled_email" style="margin-right:2px;" onclick="filled_email_check(this.id);" />Check here to let us contact you to follow up on you feedback.</div>
+        <span id="email_area" style="display:none;">
+                <div style="margin-top:12px;"><input type="text" class="emailtext" name="email" placeholder="Email address (optional)" /></div>
+                <div class="emailnotice">Your email addresses will keep private. We understand your privacy is important.</div>
+        </span>
+        <div style="margin-top:30px;">
+          <a href="javascript:void(0);" onclick="fbcontent_submit();" id="submit_btn" class="submit_btn submit_btn_disabled">Submit Feedback</a>
+          <span style="display:block;float:left;margin-left:10px;color:#898989;margin-top: 5px;">or</span>
+          <a href="javascript:void(0);" onclick="window.opener=null;window.open('','_self');window.close();" class="cancel">cancel</a>
+          <div style="clear:both;"></div>
+        </div>
+      </form>
+      <div class="shadow"></div>
+                </div>
+        </div>
+</div>
 </body>
 </html>

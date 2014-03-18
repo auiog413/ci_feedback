@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: feedback
 -- ------------------------------------------------------
--- Server version	5.5.35-0ubuntu0.13.10.2
+-- Server version       5.5.35-0ubuntu0.13.10.2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -53,6 +53,9 @@ CREATE TABLE `feedback_items` (
   `datetime` int(10) unsigned NOT NULL,
   `read` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否已读',
   `priority` smallint(4) NOT NULL DEFAULT '1' COMMENT '反馈的重要性分级',
+  `vote`  varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `version`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `os`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

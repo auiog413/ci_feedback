@@ -1,9 +1,10 @@
 /statics/fb_uploads/*
+!/statics/fb_uploads/index.html
 /statics/captcha/*
+!/statics/captcha/index.html
 /application/cache/*
 !/application/cache/index.html
 !/application/cache/.htaccess
 /application/logs/*
 !/application/logs/index.html
 !/application/logs/.htaccess
-.codeIgniter_2.1.4.zip
