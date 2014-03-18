@@ -138,7 +138,7 @@
 .main{margin-top:56px;font-family:"Tahoma";}
 .content{width:568px;padding:38px 83px;background-color:#fdfdff;position:relative;left:50%;border-radius:6px;margin-left:-367px;-webkit-box-shadow:0px 0px 4px -1px #3A3A3A;-moz-box-shadow:0px 0px 4px -1px #3A3A3A;box-shadow:0px 0px 4px -1px #3A3A3A;}
 .form_title{font-size:26px;color:#029bdb;border-bottom:#ddd dashed 1px;padding-bottom:8px;font-weight:normal;}
-.required_star{font-weight:bold;color:#ffa800;font-size:16px;margin-left:5px;}
+.required_star{vertical-align:middle;font-weight:bold;color:#ffa800;font-size:16px;margin-left:5px;}
 .content .tape{background:url(statics/tape.png) no-repeat;width:154px;height:54px;position:absolute;top:-28px;left:291px;}
 .content .shadow{background:url(statics/shadow.png) no-repeat;width:954px;height:100px;position:absolute;bottom:-100px;left:0px;}
 .captcha_area img{border:#e2e3e5 solid 1px;}
